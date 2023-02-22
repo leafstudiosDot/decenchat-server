@@ -1,3 +1,5 @@
 *.lock
 yarn-error.log
 node_modules
+dbdata
+runsh
