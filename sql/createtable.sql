@@ -1,0 +1,52 @@
+CREATE TABLE IF NOT EXISTS public.members
+(
+    id integer NOT NULL DEFAULT nextval('members_id_seq'::regclass),
+    name text COLLATE pg_catalog."default" NOT NULL,
+    permlevel integer NOT NULL,
+    profilepic bytea,
+    bio text COLLATE pg_catalog."default",
+    clientid text COLLATE pg_catalog."default" NOT NULL,
+    joined timestamp with time zone,
+    CONSTRAINT members_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.members
+    OWNER to admin;
+
+
+
+CREATE TABLE IF NOT EXISTS public.channels
+(
+    id integer NOT NULL DEFAULT nextval('channels_id_seq'::regclass),
+    name text COLLATE pg_catalog."default" NOT NULL,
+    index integer NOT NULL,
+    CONSTRAINT channels_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.channels
+    OWNER to admin;
+
+
+
+CREATE TABLE IF NOT EXISTS public.messages
+(
+    id integer NOT NULL DEFAULT nextval('messages_id_seq'::regclass),
+    message text COLLATE pg_catalog."default" NOT NULL,
+    attachment bytea[],
+    author integer NOT NULL,
+    date timestamp with time zone NOT NULL,
+    CONSTRAINT messages_pkey PRIMARY KEY (id),
+    CONSTRAINT members_id FOREIGN KEY (author)
+        REFERENCES public.members (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.messages
+    OWNER to admin;
