@@ -1,6 +1,14 @@
 version: '3'
 
 services:
+  decensha-server:
+    build: .
+    ports:
+      - "7810:7810"
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - postgres
   postgres:
     restart: always
     image: postgres:latest
