@@ -4,3 +4,7 @@
 <br />
 
 # The Decentralised Chatroom
+
+## Build
+1. `cargo build` or `cargo run`
+2. `cargo build --release` for Production

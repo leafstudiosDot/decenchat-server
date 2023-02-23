@@ -3,12 +3,15 @@ version: '3'
 services:
   decensha-server:
     build: .
+    container_name: decensha
+    image: decensha-server
     ports:
       - "7810:7810"
-    environment:
-      NODE_ENV: development
-    depends_on:
+    volumes:
+      - ./:/app
+    links:
       - postgres
+    command: bash -c "cargo run"
   postgres:
     restart: always
     image: postgres:latest

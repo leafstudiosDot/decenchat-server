@@ -1,10 +1,17 @@
-FROM node:19
+FROM ubuntu:20.04
 
-WORKDIR /
-COPY package*.json ./
+WORKDIR /app
+COPY . /app
 
-RUN npm install
-COPY . .
+RUN apt-get update
 
-EXPOSE 3000
-CMD ["npm", "start"]
+RUN apt-get install -y \
+    build-essential \
+    curl
+
+RUN apt-get update
+
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+
+ENV PATH="/root/.cargo/bin:${PATH}"
+CMD ["ls"]
