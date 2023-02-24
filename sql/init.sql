@@ -8,6 +8,8 @@ CREATE DATABASE decensha
     CONNECTION LIMIT = -1
     IS_TEMPLATE = False;
 
+CONNECT decensha
+
 
 
 CREATE SCHEMA IF NOT EXISTS public
