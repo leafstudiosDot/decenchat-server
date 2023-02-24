@@ -1,17 +1,3 @@
-CREATE DATABASE decensha
-    WITH
-    OWNER = admin
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'en_US.utf8'
-    LC_CTYPE = 'en_US.utf8'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1
-    IS_TEMPLATE = False;
-
-CONNECT decensha
-
-
-
 CREATE SCHEMA IF NOT EXISTS public
     AUTHORIZATION pg_database_owner;
 
@@ -22,6 +8,8 @@ GRANT USAGE ON SCHEMA public TO PUBLIC;
 
 GRANT ALL ON SCHEMA public TO pg_database_owner;
 
+
+CREATE SEQUENCE IF NOT EXISTS members_id_seq;
 
 
 CREATE TABLE IF NOT EXISTS public.members
@@ -43,6 +31,8 @@ ALTER TABLE IF EXISTS public.members
     OWNER to admin;
 
 
+CREATE SEQUENCE IF NOT EXISTS channels_id_seq;
+
 
 CREATE TABLE IF NOT EXISTS public.channels
 (
@@ -57,6 +47,8 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.channels
     OWNER to admin;
 
+
+CREATE SEQUENCE IF NOT EXISTS messages_id_seq;
 
 
 CREATE TABLE IF NOT EXISTS public.messages
@@ -78,6 +70,8 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.messages
     OWNER to admin;
 
+
+CREATE SEQUENCE IF NOT EXISTS audit_id_seq;
 
 
 CREATE TABLE IF NOT EXISTS public.audit
