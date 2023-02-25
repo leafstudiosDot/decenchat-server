@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS public.channels
     id integer NOT NULL DEFAULT nextval('channels_id_seq'::regclass),
     name text COLLATE pg_catalog."default" NOT NULL,
     index integer NOT NULL,
+    voice boolean,
     CONSTRAINT channels_pkey PRIMARY KEY (id)
 )
 
@@ -46,6 +47,14 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.channels
     OWNER to admin;
+
+INSERT INTO public.channels(
+	id, name, index)
+	VALUES (0, 'general', 0, false);
+
+INSERT INTO public.channels(
+	id, name, index)
+	VALUES (1, 'Voice', 1, true);
 
 
 CREATE SEQUENCE IF NOT EXISTS messages_id_seq;
@@ -58,11 +67,17 @@ CREATE TABLE IF NOT EXISTS public.messages
     attachment bytea[],
     author integer NOT NULL,
     date timestamp with time zone NOT NULL,
+    channel integer NOT NULL,
     CONSTRAINT messages_pkey PRIMARY KEY (id),
     CONSTRAINT members_id FOREIGN KEY (author)
         REFERENCES public.members (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT messages_channel_fkey FOREIGN KEY (channel)
+        REFERENCES public.channels (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        NOT VALID
 )
 
 TABLESPACE pg_default;
