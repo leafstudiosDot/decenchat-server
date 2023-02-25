@@ -1,9 +1,9 @@
-use actix_service::{ServiceFactory, IntoServiceFactory};
-use actix_http::Response;
-use actix_web::{get, post, middleware, web, App, HttpRequest, HttpServer, Result, HttpResponse, Error, Responder};
+use actix_web::{get, middleware, web, App, HttpServer, Result, Responder};
 use actix_files::NamedFile;
 use std::path::PathBuf;
 use serde::Serialize;
+
+mod members;
 
 #[derive(Serialize)]
 struct BrowserNotice {
@@ -18,7 +18,7 @@ async fn index() -> impl Responder {
 }
 
 #[get("/icon.png")]
-async fn icon(req: HttpRequest) -> Result<NamedFile> {
+async fn icon() -> Result<NamedFile> {
     let path: PathBuf = "./assets/icon.png".parse().unwrap();
     Ok(NamedFile::open(path)?)
 }
@@ -36,7 +36,8 @@ async fn main() -> std::io::Result<()> {
             // enable logger
             .wrap(middleware::Logger::default())
             .service(index)
-            .service(icon);
+            .service(icon)
+            .service(web::resource("/members/join_server").route(web::post().to(members::server_join)));
         app
     })
     .bind(("0.0.0.0", 7810))?

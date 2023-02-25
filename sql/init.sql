@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS public.members
     clientid text COLLATE pg_catalog."default" NOT NULL,
     joined timestamp with time zone NOT NULL,
     accountkey text COLLATE pg_catalog."default" NOT NULL,
+    secret text COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT members_pkey PRIMARY KEY (id)
 )
 
