@@ -1,20 +1,17 @@
-use actix_web::{get, middleware, web, App, HttpServer, Result, Responder};
+use actix_web::{get, middleware, web, App, HttpServer, Result, HttpResponse};
 use actix_files::NamedFile;
 use std::path::PathBuf;
 use serde::Serialize;
+use serde_json::json;
 
 mod members;
 
-#[derive(Serialize)]
-struct BrowserNotice {
-    notice: String,
-}
 #[get("/")]
-async fn index() -> impl Responder {
-    let res = BrowserNotice {
-        notice: "Please open this address with Decensha Client".to_string(),
-    };
-    return web::Json(res)
+async fn index() -> HttpResponse {
+    let res = json!({
+        "notice": "Please open this address with Decensha Client".to_string(),
+    });
+    HttpResponse::Ok().json(res)
 }
 
 #[get("/icon.png")]
