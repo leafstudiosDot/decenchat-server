@@ -1,4 +1,4 @@
-use actix_web::{post, web, HttpResponse, Result};
+use actix_web::{web, HttpResponse, Result};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
@@ -9,9 +9,9 @@ pub struct JoinRequestStruct {
 
 }
 pub async fn server_join(newmem: web::Json<JoinRequestStruct>) -> Result<HttpResponse> {
-    
+
     let res = json!({
-        "notice": "yes".to_string(),
+        "notice": newmem.key.to_string(),
     });
 
     Ok(HttpResponse::Ok().content_type("application/json").json(res))

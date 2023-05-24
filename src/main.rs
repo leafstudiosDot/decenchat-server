@@ -1,10 +1,10 @@
 use actix_web::{get, middleware, web, App, HttpServer, Result, HttpResponse};
 use actix_files::NamedFile;
 use std::path::PathBuf;
-use serde::Serialize;
 use serde_json::json;
 
 mod members;
+mod server;
 
 #[get("/")]
 async fn index() -> HttpResponse {
@@ -34,7 +34,8 @@ async fn main() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             .service(index)
             .service(icon)
-            .service(web::resource("/members/join_server").route(web::post().to(members::server_join)));
+            .service(web::resource("/members/join_server").route(web::post().to(members::server_join)))
+            .service(web::resource("/server/details").route(web::get().to(server::details)));
         app
     })
     .bind(("0.0.0.0", 7810))?
