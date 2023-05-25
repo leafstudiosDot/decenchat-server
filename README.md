@@ -17,7 +17,7 @@ This repository includes deployment configurations for Docker and docker-compose
 2. `cargo build --release` for Production
 
 ## License
-2023 © leafstudiosDot and other contributors for this project.
+© 2023 leafstudiosDot and other contributors for this project.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
