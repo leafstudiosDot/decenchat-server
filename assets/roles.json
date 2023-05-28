@@ -1,0 +1,21 @@
+{
+    "roles": [
+        {
+            "name": "Owner",
+            "permissions": [
+                "ADMINISTRATOR"
+            ]
+        },
+        {
+            "name": "Moderator",
+            "permissions": [
+                "REMOVE_MEMBERS",
+                "BLACKLIST_MEMBERS",
+                "MANAGE_ROOMS",
+                "MANAGE_MESSAGES",
+                "MANAGE_EMOJIS",
+                "VIEW_AUDIT"
+            ]
+        }
+    ]
+}

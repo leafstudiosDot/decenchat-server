@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS public.members
 (
     id integer NOT NULL DEFAULT nextval('members_id_seq'::regclass),
     name text COLLATE pg_catalog."default" NOT NULL,
-    permlevel integer NOT NULL,
+    roles text[] COLLATE pg_catalog."default",
     profilepic bytea,
     bio text COLLATE pg_catalog."default",
     clientid text COLLATE pg_catalog."default" NOT NULL,

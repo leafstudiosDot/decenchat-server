@@ -1,0 +1,16 @@
+{
+    "title": "Server Title",
+    "description": "A Decensha Chatroom Server",
+    "owner": "",
+    "moderators": [],
+    "rules": [
+        "Links suspected as spam are prohibited",
+        "Any form of NSFW Content must be marked as such",
+        "Keep this community friendly and kind to everyone",
+        "These are the rules"
+    ],
+    "blacklist": [],
+    "serverversion": "1",
+    "nsfwfocused": false,
+    "connectdecenshanetwork": true
+}
