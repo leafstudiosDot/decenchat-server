@@ -49,12 +49,12 @@ ALTER TABLE IF EXISTS public.channels
     OWNER to admin;
 
 INSERT INTO public.channels(
-	id, name, index)
-	VALUES (0, 'general', 0, false);
+	id, name, index, voice)
+	VALUES (0, 'general', 0);
 
 INSERT INTO public.channels(
-	id, name, index)
-	VALUES (1, 'Voice', 1, true);
+	id, name, index, voice)
+	VALUES (1, 'Voice', 1);
 
 
 CREATE SEQUENCE IF NOT EXISTS messages_id_seq;
