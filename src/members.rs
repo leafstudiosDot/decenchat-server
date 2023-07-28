@@ -16,3 +16,12 @@ pub async fn server_join(newmem: web::Json<JoinRequestStruct>) -> Result<HttpRes
 
     Ok(HttpResponse::Ok().content_type("application/json").json(res))
 }
+
+pub async fn server_left() -> Result<HttpResponse> {
+
+    let res = json!({
+        "notice": "Left the server".to_string(),
+    });
+
+    Ok(HttpResponse::Ok().content_type("application/json").json(res))
+}
