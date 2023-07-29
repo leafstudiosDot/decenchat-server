@@ -6,3 +6,4 @@ runsh
 target
 pgadmin_data
 ._*
+.env.local
