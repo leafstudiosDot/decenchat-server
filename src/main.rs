@@ -39,7 +39,7 @@ fn main() -> std::io::Result<()> {
             println!("Your database will use Postgres");
             //db_postgres::pg_connect();
             let db_client = Client::connect(
-                "postgresql://dboperator:operatorpass123@localhost:5243/postgres",
+                format!("postgresql://{}:{}@{}:{}/postgres", db::db_postgres::pg_user(), db::db_postgres::pg_pass(), db::db_postgres::pg_host(), db::db_postgres::pg_port()).as_str(),
                 NoTls,
             );
             run_server()
