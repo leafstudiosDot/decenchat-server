@@ -21,7 +21,9 @@ CREATE TABLE IF NOT EXISTS public.members
     bio text COLLATE pg_catalog."default",
     clientid text COLLATE pg_catalog."default" NOT NULL,
     joined timestamp with time zone NOT NULL,
-    accountkey text COLLATE pg_catalog."default" NOT NULL,
+    password text COLLATE pg_catalog."default" NOT NULL,
+    recoverymethod json[],
+    status text,
     CONSTRAINT members_pkey PRIMARY KEY (id)
 )
 
