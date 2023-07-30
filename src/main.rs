@@ -32,8 +32,6 @@ fn main() -> std::io::Result<()> {
     std::env::set_var("RUST_LOG", "actix_web=info");
     env_logger::init();
 
-    //println!("{}", db::db_chose());
-
     match db::db_chose().as_str() {
         "POSTGRES" => {
             println!("Your database will use Postgres");
