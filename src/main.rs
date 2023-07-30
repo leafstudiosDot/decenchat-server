@@ -61,8 +61,10 @@ async fn run_server() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             .service(index)
             .service(icon)
-            .service(web::resource("/members/join_server").route(web::post().to(members::server_join)))
-            .service(web::resource("/members/left_server").route(web::delete().to(members::server_left)))
+            .service(web::scope("/members")
+                .service(members::server_join)
+                .service(members::server_left)
+            )
             .service(web::resource("/server/details").route(web::get().to(server::details)));
         app
     })

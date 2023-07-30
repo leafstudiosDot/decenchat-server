@@ -1,4 +1,4 @@
-use actix_web::{web, HttpResponse, Result};
+use actix_web::{web, HttpResponse, Result, get, post, delete};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
@@ -8,6 +8,8 @@ pub struct JoinRequestStruct {
     name: Option<String>,
 
 }
+
+#[post("/join_server")]
 pub async fn server_join(newmem: web::Json<JoinRequestStruct>) -> Result<HttpResponse> {
 
     let res = json!({
@@ -17,6 +19,7 @@ pub async fn server_join(newmem: web::Json<JoinRequestStruct>) -> Result<HttpRes
     Ok(HttpResponse::Ok().content_type("application/json").json(res))
 }
 
+#[delete("/left_server")]
 pub async fn server_left() -> Result<HttpResponse> {
 
     let res = json!({
