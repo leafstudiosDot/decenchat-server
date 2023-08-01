@@ -20,6 +20,7 @@ pub async fn details() -> HttpResponse {
         "nsfwfocused": server_details["nsfwfocused"].as_bool(),
         "connectionmethod": server_details["connectaccountmethod"].as_array().unwrap(),
         "serverversion": server_details["serverversion"].to_string().parse::<i32>().unwrap(),
+        "rules": server_details["rules"].as_array().unwrap(),
     });
 
     HttpResponse::Ok().json(res)
