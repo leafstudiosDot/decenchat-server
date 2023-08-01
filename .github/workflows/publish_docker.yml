@@ -61,10 +61,6 @@ jobs:
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
-      - name: Tag Docker Image
-        run: |
-          docker tag decensha:local ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
