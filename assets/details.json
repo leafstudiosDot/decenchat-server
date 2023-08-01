@@ -1,5 +1,6 @@
 {
     "title": "Server Title",
+    "serverid": "decensha",
     "description": "A Decensha Chatroom Server",
     "owner": "Decensha",
     "moderators": [],
@@ -10,15 +11,17 @@
         "These are the rules"
     ],
     "blacklist": [],
-    "serverversion": "1",
+    "serverversion": 1,
     "nsfwfocused": false,
     "connectdecenshanetwork": true,
     "signinmethod": "user_pass",
-    "connectaccountmethod": {
-        "hodots": {
-            "method": "oauth2",
-            "clientid": "",
-            "secret": ""
+    "connectaccountmethod": [
+        {
+            "hodots": {
+                "method": "oauth2",
+                "clientid": "",
+                "secret": ""
+            }
         }
-    }
+    ]
 }
