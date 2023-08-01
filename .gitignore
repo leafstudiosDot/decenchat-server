@@ -7,3 +7,4 @@ target
 pgadmin_data
 ._*
 .env.local
+minio
