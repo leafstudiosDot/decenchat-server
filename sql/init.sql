@@ -14,7 +14,7 @@ CREATE SEQUENCE IF NOT EXISTS members_id_seq;
 
 CREATE TABLE IF NOT EXISTS public.members
 (
-    id integer NOT NULL DEFAULT nextval('members_id_seq'::regclass),
+    id bigserial NOT NULL,
     name text COLLATE pg_catalog."default" NOT NULL,
     roles text[] COLLATE pg_catalog."default",
     profilepic bytea,
@@ -38,9 +38,9 @@ CREATE SEQUENCE IF NOT EXISTS channels_id_seq;
 
 CREATE TABLE IF NOT EXISTS public.channels
 (
-    id integer NOT NULL DEFAULT nextval('channels_id_seq'::regclass),
+    id bigserial NOT NULL,
     name text COLLATE pg_catalog."default" NOT NULL,
-    index integer NOT NULL,
+    sortindex integer NOT NULL,
     voice boolean,
     CONSTRAINT channels_pkey PRIMARY KEY (id)
 )
@@ -51,12 +51,12 @@ ALTER TABLE IF EXISTS public.channels
     OWNER to admin;
 
 INSERT INTO public.channels(
-	id, name, index, voice)
-	VALUES (0, 'general', 0);
+	id, name, sortindex, voice)
+	VALUES (0, 'general', 0, false);
 
 INSERT INTO public.channels(
-	id, name, index, voice)
-	VALUES (1, 'Voice', 1);
+	id, name, sortindex, voice)
+	VALUES (1, 'Voice', 1, true);
 
 
 CREATE SEQUENCE IF NOT EXISTS messages_id_seq;
@@ -64,12 +64,12 @@ CREATE SEQUENCE IF NOT EXISTS messages_id_seq;
 
 CREATE TABLE IF NOT EXISTS public.messages
 (
-    id integer NOT NULL DEFAULT nextval('messages_id_seq'::regclass),
+    id bigserial NOT NULL,
     message text COLLATE pg_catalog."default" NOT NULL,
-    attachment bytea[],
-    author integer NOT NULL,
+    attachment text[],
+    author bigserial NOT NULL,
     date timestamp with time zone NOT NULL,
-    channel integer NOT NULL,
+    channel bigserial NOT NULL,
     CONSTRAINT messages_pkey PRIMARY KEY (id),
     CONSTRAINT members_id FOREIGN KEY (author)
         REFERENCES public.members (id) MATCH SIMPLE
@@ -93,7 +93,7 @@ CREATE SEQUENCE IF NOT EXISTS audit_id_seq;
 
 CREATE TABLE IF NOT EXISTS public.audit
 (
-    id integer NOT NULL DEFAULT nextval('audit_id_seq'::regclass),
+    id bigserial NOT NULL,
     member integer NOT NULL,
     action text COLLATE pg_catalog."default" NOT NULL,
     tag text COLLATE pg_catalog."default" NOT NULL,
