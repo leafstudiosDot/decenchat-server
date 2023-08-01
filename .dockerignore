@@ -4,3 +4,7 @@ dbdata
 runsh
 sql
 pgadmin_data
+minio
+nginx
+.github
+target

@@ -2,9 +2,11 @@ version: '3'
 
 services:
   decensha-server:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: decensha
-    image: decensha-server
+    image: decensha:local
     ports:
       - "7810:7810"
     volumes:
