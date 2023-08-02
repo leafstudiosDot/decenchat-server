@@ -17,6 +17,7 @@ pub async fn details() -> Result<HttpResponse> {
 
     let res = json!({
         "title": server_details["title"].as_str(),
+        "description": server_details["description"].as_str(),
         "serverid": server_details["serverid"].as_str(),
         "signinmethod": server_details["serverid"].as_str(),
         "nsfwfocused": server_details["nsfwfocused"].as_bool(),
