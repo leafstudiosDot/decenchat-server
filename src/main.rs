@@ -1,8 +1,9 @@
-use actix_web::{get, middleware, web, App, HttpServer, Result, HttpResponse};
+use actix_web::{get, middleware, web, http, App, HttpServer, Result, HttpResponse};
 use actix_files::NamedFile;
 use std::path::PathBuf;
 use serde_json::json;
 use dotenv::dotenv;
+use actix_cors::Cors;
 
 mod members;
 mod server;
@@ -50,9 +51,11 @@ fn main() -> std::io::Result<()> {
 async fn run_server() -> std::io::Result<()> {
     println!("Your Decensha Server port for development is 7810");
     HttpServer::new(|| {
+
         let app = App::new()
             // enable logger
             .wrap(middleware::Logger::default())
+            .wrap(Cors::default().allow_any_origin().send_wildcard())
             .service(index)
             .service(icon)
             .service(web::scope("/members")
