@@ -59,7 +59,10 @@ async fn run_server() -> std::io::Result<()> {
                 .service(members::server_join)
                 .service(members::server_left)
             )
-            .service(web::resource("/server/details").route(web::get().to(server::details)));
+            .service(web::scope("/server")
+                .service(server::details)
+                .service(server::icon)
+            );
         app
     })
     .bind(("0.0.0.0", 7810))?

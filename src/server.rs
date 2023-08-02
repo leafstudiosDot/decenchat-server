@@ -1,10 +1,12 @@
-use actix_web::{web, HttpResponse, Result};
+use actix_web::{web, HttpResponse, Result, get, HttpRequest, Error};
+use actix_files::NamedFile;
 use serde::{Deserialize, Serialize};
 
 use serde_json::json;
 use serde_json::{Number, Value};
 
-pub async fn details() -> HttpResponse {
+#[get("/details")]
+pub async fn details() -> Result<HttpResponse> {
 
     let servdetfile = "./assets/details.json".to_string();
 
@@ -23,5 +25,18 @@ pub async fn details() -> HttpResponse {
         "rules": server_details["rules"].as_array().unwrap(),
     });
 
-    HttpResponse::Ok().json(res)
+    Ok(HttpResponse::Ok().content_type("application/json").json(res))
+}
+
+#[get("/icon")]
+pub async fn icon(req: HttpRequest) -> Result<HttpResponse, Error> {
+    match std::fs::read("./assets/icon.png") {
+        Ok(icon) => {
+            Ok(HttpResponse::Ok().content_type("image/png").body(icon))
+        },
+        Err(e) => {
+            println!("icon({}): error, {:?}", req.match_info().query("id").parse::<String>().unwrap(), e);
+            Err(actix_web::Error::from(e))
+        }
+    }
 }
