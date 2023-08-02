@@ -8,3 +8,4 @@ pgadmin_data
 ._*
 .env.local
 minio
+assets/details.json
