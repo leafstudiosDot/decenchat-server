@@ -9,3 +9,4 @@ pgadmin_data
 .env.local
 minio
 assets/details.json
+assets/certs/*

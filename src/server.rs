@@ -5,6 +5,8 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 use serde_json::{Number, Value};
 
+use crate::SECURED_CERT;
+
 #[get("/details")]
 pub async fn details() -> Result<HttpResponse> {
 
@@ -24,6 +26,7 @@ pub async fn details() -> Result<HttpResponse> {
         "connectionmethod": server_details["connectaccountmethod"].as_array().unwrap(),
         "serverversion": server_details["serverversion"].to_string().parse::<i32>().unwrap(),
         "rules": server_details["rules"].as_array().unwrap(),
+        "certified": unsafe { SECURED_CERT },
     });
 
     Ok(HttpResponse::Ok().content_type("application/json").json(res))
