@@ -20,11 +20,6 @@ async fn index() -> HttpResponse {
     HttpResponse::Ok().json(res)
 }
 
-#[get("/icon.png")]
-async fn icon() -> Result<NamedFile> {
-    let path: PathBuf = "./assets/icon.png".parse().unwrap();
-    Ok(NamedFile::open(path)?)
-}
 
 
 fn main() -> std::io::Result<()> {
@@ -57,7 +52,6 @@ async fn run_server() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             .wrap(Cors::default().allow_any_origin().send_wildcard())
             .service(index)
-            .service(icon)
             .service(web::scope("/members")
                 .service(members::server_join)
                 .service(members::server_left)
