@@ -104,7 +104,7 @@ pub async fn details() -> Result<HttpResponse> {
         "title": server_details["title"].as_str(),
         "description": server_details["description"].as_str(),
         "serverid": server_details["serverid"].as_str(),
-        "signinmethod": server_details["serverid"].as_str(),
+        "signinmethod": server_details["signinmethod"].as_str(),
         "nsfwfocused": server_details["nsfwfocused"].as_bool(),
         "connectionmethod": server_details["connectaccountmethod"].as_array().unwrap(),
         "serverversion": server_details["serverversion"].to_string().parse::<i32>().unwrap(),
