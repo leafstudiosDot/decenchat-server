@@ -11,6 +11,13 @@ use regex::Regex;
 
 use crate::SECURED_CERT;
 
+fn limit_characters(input_str: Option<&str>, limit: usize) -> &str {
+    match input_str {
+        Some(str) => &str[..std::cmp::min(str.len(), limit)],
+        None => "",
+    }
+}
+
 fn openssl_extract_subject_fields(buffer: &str) -> Option<(String, String, String, String, String, String)> {
     let re = Regex::new(r"subject\s*=\s*C\s*=\s*(.*?),\s*ST\s*=\s*(.*?),\s*L\s*=\s*(.*?),\s*O\s*=\s*(.*?),\s*CN\s*=\s*(.*?),\s*emailAddress\s*=\s*(.*?)\s*").unwrap();
 
@@ -103,7 +110,7 @@ pub async fn details() -> Result<HttpResponse> {
     let res = json!({
         "title": server_details["title"].as_str(),
         "description": server_details["description"].as_str(),
-        "serverid": server_details["serverid"].as_str(),
+        "serverid": limit_characters(server_details["serverid"].as_str(), 32),
         "signinmethod": server_details["signinmethod"].as_str(),
         "nsfwfocused": server_details["nsfwfocused"].as_bool(),
         "connectionmethod": server_details["connectaccountmethod"].as_array().unwrap(),
