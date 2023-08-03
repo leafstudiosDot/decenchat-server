@@ -30,6 +30,33 @@ async fn index() -> HttpResponse {
     HttpResponse::Ok().json(res)
 }
 
+trait FileProcessor {
+    fn is_file(&self, path: &str) -> bool;
+    fn read_to_string(&self, path: &str) -> Result<String, Box<dyn std::error::Error>>;
+}
+
+struct CertProcessor;
+
+impl FileProcessor for CertProcessor {
+    fn is_file(&self, path: &str) -> bool {
+        Path::new(path).is_file()
+    }
+    fn read_to_string(&self, path: &str) -> Result<String, Box<dyn std::error::Error>> {
+        Ok(std::fs::read_to_string(path)?)
+    }
+}
+
+fn readCert(processor: impl FileProcessor, args: Vec<String>) -> Result<(), Box<dyn std::error::Error>> {
+    let path = IGCA_PEM;
+
+    let cert = processor.read_to_string(path)?;
+    let (_, pem) = pem_to_der(cert.as_bytes())?;
+    let (_, cert) = parse_x509_der(&pem.contents)?;
+    let output = format!("{:#?}", cert.tbs_certificate);
+    //println!("{}", output);
+    Ok(())
+}
+
 
 fn main() -> std::io::Result<()> {
     println!("Starting Decensha Server...");
@@ -40,11 +67,6 @@ fn main() -> std::io::Result<()> {
     if Path::new(IGCA_PEM).exists() == true {
         println!("Entering Secured Conn Mode...");
         let data = std::fs::read(IGCA_PEM).expect("Could not read file");
-        /*for pem in Pem::iter_from_buffer(&data) {
-            let pem = pem.expect("Reading next PEM block failed");
-            let x509 = pem.parse_x509().expect("X.509: decoding DER failed");
-            assert_eq!(x509.tbs_certificate.version, X509Version::V3);
-        }*/
 
         let res = pem_to_der(&data);
         match res {
@@ -55,6 +77,11 @@ fn main() -> std::io::Result<()> {
                 //
                 let res_x509 = parse_x509_der(&pem.contents);
                 assert!(res_x509.is_ok());
+
+                let args = std::env::args().skip(1).collect();
+                let processor = CertProcessor;
+                readCert(processor, args);
+
                 unsafe { SECURED_CERT = true };
             },
             _ => panic!("PEM parsing failed: {:?}", res),
