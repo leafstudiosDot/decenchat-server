@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS public.members
     id bigserial NOT NULL,
     name text COLLATE pg_catalog."default" NOT NULL,
     roles text[] COLLATE pg_catalog."default",
-    profilepic bytea,
+    profilepic text,
     bio text COLLATE pg_catalog."default",
     clientid text COLLATE pg_catalog."default" NOT NULL,
     joined timestamp with time zone NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS public.messages
 (
     id bigserial NOT NULL,
     message text COLLATE pg_catalog."default" NOT NULL,
-    attachment text[],
+    attachment json[],
     author bigserial NOT NULL,
     date timestamp with time zone NOT NULL,
     channel bigserial NOT NULL,
