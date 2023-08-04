@@ -11,20 +11,33 @@ GRANT ALL ON SCHEMA public TO pg_database_owner;
 
 CREATE SEQUENCE IF NOT EXISTS members_id_seq;
 
+CREATE TABLE public.roles
+(
+    id bigserial NOT NULL,
+    name text NOT NULL,
+    permissions text[] NOT NULL,
+    color text NOT NULL,
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE IF EXISTS public.roles
+    OWNER to admin;
 
 CREATE TABLE IF NOT EXISTS public.members
 (
     id bigserial NOT NULL,
+    username text NOT NULL,
     name text COLLATE pg_catalog."default" NOT NULL,
-    roles text[] COLLATE pg_catalog."default",
+    roles bigint[],
     profilepic text,
+    secretkey text NOT NULL,
     bio text COLLATE pg_catalog."default",
     clientid text COLLATE pg_catalog."default" NOT NULL,
     joined timestamp with time zone NOT NULL,
     password text COLLATE pg_catalog."default" NOT NULL,
     recoverymethod json[],
     status text,
-    CONSTRAINT members_pkey PRIMARY KEY (id)
+    CONSTRAINT members_pkey PRIMARY KEY (id),
 )
 
 TABLESPACE pg_default;
