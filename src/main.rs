@@ -111,7 +111,7 @@ async fn run_server() -> std::io::Result<()> {
         let app = App::new()
             // enable logger
             .wrap(middleware::Logger::default())
-            .wrap(Cors::default().allow_any_origin().send_wildcard())
+            .wrap(Cors::default().allow_any_origin().send_wildcard().allow_any_method().allow_any_header())
             .service(index)
             .service(web::scope("/members")
                 .service(members::server_join)
