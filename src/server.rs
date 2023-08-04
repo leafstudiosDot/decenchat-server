@@ -50,20 +50,11 @@ fn certified(server_details: serde_json::Value) -> Result<(serde_json::Value), a
         let mut buffer = String::new();
         match openssl_o.stdout.expect("Failed to open stdout").read_to_string(&mut buffer) {
             Ok(_) => {
-                println!("Output from OpenSSL: {}", buffer);
-    
                 if buffer.is_empty() {
                     println!("Empty Buffer from OpenSSL");
                     return Ok(json!({ "certified": false }));
                 } else {
                     if let Some((country, state, locality, common_name, organization, email_address)) = openssl_extract_subject_fields(&buffer) {
-                        println!("Country: {}", country);
-                        println!("State: {}", state);
-                        println!("Locality: {}", locality);
-                        println!("Common Name: {}", common_name);
-                        println!("Organization: {}", organization);
-                        println!("Email Address: {}", email_address);
-
                         if (Some(common_name.to_string()) != server_details["serverid"].as_str().map(|s| s.to_string())) {
                             println!("Common Name does not match serverid");
                             return Ok(json!({ "certified": false }));
@@ -80,7 +71,6 @@ fn certified(server_details: serde_json::Value) -> Result<(serde_json::Value), a
                         }
                     } else {
                         println!("Error extracting subject fields from OpenSSL output");
-                        println!("OpenSSL Output: {}", buffer);
                         return Ok(json!({ "certified": false }));
                     }
                 }
