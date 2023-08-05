@@ -14,6 +14,20 @@ services:
     links:
       - postgres
     command: bash -c "cargo run"
+  decensha-admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    volumes:
+      - ./admin:/adminpanel/:rw
+    ports:
+      - "7811:7811"
+    image: decensha-admin:local
+    links:
+      - decensha-server
+    command: >
+      bash -c "yarn install --production=false &&
+      yarn run dev"
   postgres:
     restart: always
     image: postgres:latest
