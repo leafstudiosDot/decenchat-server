@@ -8,14 +8,30 @@ CREATE TABLE admin.accounts
     password text NOT NULL,
     permissions text[],
     status text,
+    firstloggedin boolean,
     PRIMARY KEY (id)
 );
 
 ALTER TABLE IF EXISTS admin.accounts
     OWNER to admin;
 
-INSERT INTO admin.accounts (name, password, permissions, status) VALUES ('Administrator', '$2y$10$XBs4NN00pxd5e01Nb01Qk.xTJQM1N0Epk4dWA/EWv7XP9Oe8e.uX6', '{"ADMINISTRATOR"}', 'master');
+INSERT INTO admin.accounts (name, password, permissions, status, firstloggedin) VALUES ('Administrator', '$2y$10$XBs4NN00pxd5e01Nb01Qk.xTJQM1N0Epk4dWA/EWv7XP9Oe8e.uX6', '{"ADMINISTRATOR"}', 'master', false);
                                                                                         -- admin
+
+CREATE TABLE admin.sessions
+(
+    token text NOT NULL,
+    userid bigint NOT NULL,
+    PRIMARY KEY (token),
+    CONSTRAINT userid_accounts FOREIGN KEY (userid)
+        REFERENCES admin.accounts (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        NOT VALID
+);
+
+ALTER TABLE IF EXISTS admin.sessions
+    OWNER to admin;
 
 
 
