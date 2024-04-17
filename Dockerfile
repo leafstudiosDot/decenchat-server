@@ -1,22 +1,21 @@
-FROM ubuntu:22.04
+FROM rust:latest as builder
 
-WORKDIR /app
-COPY . /app
+WORKDIR /usr/src/decensha
+COPY . .
+RUN cargo build --release
 
-RUN apt-get update
-
-RUN apt-get install -y \
+FROM debian:bookworm
+ENV DEBIAN_FRONTEND=noninteractive
+COPY --from=builder /usr/src/decensha/target/release/decensha /usr/local/bin/decensha
+RUN apt-get update && \
+    apt-get install -y \
     build-essential \
-    curl
+    curl \
+    postgresql \
+    libpq-dev \
+    pkg-config \
+    openssl \
+    libssl-dev
 
-RUN OPENSSL_DIR=/usr/bin/openssl DEBIAN_FRONTEND=noninteractive apt-get install -y openssl libssl-dev pkg-config libssl-dev
-
-RUN apt-get update
-RUN apt-get clean
-
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-
-ENV PATH="/root/.cargo/bin:${PATH}"
-RUN rustup update stable
 EXPOSE 7810
-#RUN cargo build
+CMD ["decensha"]

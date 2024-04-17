@@ -10,10 +10,9 @@ services:
     ports:
       - "7810:7810"
     volumes:
-      - ./:/app
+      - ./assets:/app/assets
     links:
       - postgres
-    command: bash -c "cargo run"
   decensha-admin:
     build:
       context: ./admin
@@ -29,7 +28,7 @@ services:
       bash -c "yarn install --production=false &&
       yarn run dev"
   postgres:
-    restart: always
+    restart: unless-stopped
     image: postgres:latest
     container_name: postgres
     volumes:
@@ -51,6 +50,8 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
       PGADMIN_DEFAULT_PASSWORD: password
+    depends_on:
+      - decensha-server
   minio:
     command: server /data --console-address ":9001"
     environment:
