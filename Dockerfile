@@ -31,7 +31,6 @@ RUN apt-get update && \
     apt-get install -y openssl libssl-dev && \
     rm -rf /var/lib/apt/lists/*
     
-COPY .env.local ./.env.local
 COPY .env ./.env
 
 EXPOSE 7810
