@@ -19,9 +19,10 @@ RUN cargo chef cook --release --recipe-path recipe.json
 FROM rust:latest as builder
 WORKDIR /usr/src/decensha
 COPY --from=cacher /usr/local/cargo /usr/local/cargo
+RUN cargo install cargo-watch
 COPY src ./src
 COPY Cargo.toml Cargo.lock ./
-COPY .env ./.env
+COPY .env.local ./.env.local
 RUN cargo build --release
 
 FROM debian:bookworm-slim

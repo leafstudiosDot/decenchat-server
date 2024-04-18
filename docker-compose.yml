@@ -12,6 +12,7 @@ services:
     volumes:
       - ./assets:/usr/src/decensha/assets
       - ./src:/usr/src/decensha/src
+      - ./.env.local:/usr/src/decensha/.env.local
     links:
       - postgres
   decensha-admin:

@@ -14,7 +14,8 @@ This repository includes deployment configurations for Docker and docker-compose
 
 ## Setup Server (Docker Image)
 1. Build Docker Image - `docker build -t decensha .`
-2. Run Docker Image as a Container - `docker run -v $(pwd)/assets:/usr/src/decensha/assets -v $(pwd)/target:/usr/src/decensha/target decensha`
+2. Run Docker Image as a Container - `docker run -v $(pwd)/assets:/usr/src/decensha/assets -v $(pwd)/.env.local:/usr/src/decensha/.env.local decensha`
+    - Run Docker Image as a Container for server contributors - `docker run -v $(pwd)/assets:/usr/src/decensha/assets -v $(pwd)/.env.local:/usr/src/decensha/.env.local -v $(pwd)/src:/usr/src/decensha/src decensha`
 
 ## Setup Server (Docker Compose)
 1. Run `docker-compose up -d` to initialize for Docker
