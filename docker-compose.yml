@@ -11,7 +11,7 @@ services:
       - "7810:7810"
     volumes:
       - ./assets:/usr/src/decensha/assets
-      - ./target:/usr/src/decensha/target
+      - ./src:/usr/src/decensha/src
     links:
       - postgres
   decensha-admin:
