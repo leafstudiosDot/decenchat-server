@@ -13,8 +13,8 @@ This repository includes deployment configurations for Docker and docker-compose
 - nginx
 
 ## Setup Server (Docker Image)
-1. Build Docker Image - `docker build -t decensha . `
-2. Add an Assets Volume - `docker run -v $(pwd)/assets:/usr/src/decensha/assets decensha`
+1. Build Docker Image - `docker build -t decensha .`
+2. Run Docker Image as a Container - `docker run -v $(pwd)/assets:/usr/src/decensha/assets -v $(pwd)/target:/usr/src/decensha/target decensha`
 
 ## Setup Server (Docker Compose)
 1. Run `docker-compose up -d` to initialize for Docker
