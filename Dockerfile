@@ -22,7 +22,6 @@ COPY --from=cacher /usr/local/cargo /usr/local/cargo
 RUN cargo install cargo-watch
 COPY src ./src
 COPY Cargo.toml Cargo.lock ./
-COPY .env.local ./.env.local
 RUN cargo build --release
 
 FROM debian:bookworm-slim
@@ -31,6 +30,9 @@ COPY --from=builder /usr/src/decensha/target/release/decensha /usr/src/decensha/
 RUN apt-get update && \
     apt-get install -y openssl libssl-dev && \
     rm -rf /var/lib/apt/lists/*
+    
+COPY .env.local ./.env.local
+COPY .env ./.env
 
 EXPOSE 7810
 CMD ["./target/release/decensha"]
