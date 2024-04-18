@@ -7,6 +7,8 @@ RUN mkdir src && echo "fn main() {}" > src/main.rs && cargo build --release
 
 RUN rm -rf src
 COPY src ./src
+COPY .env ./.env
+COPY .env.local ./.env.local
 RUN cargo build --release
 
 FROM debian:bookworm
