@@ -1,5 +1,5 @@
 [package]
-name = "decensha-server"
+name = "decensha"
 version = "0.0.1"
 edition = "2021"
 authors = ["leafstudiosDot"]
@@ -32,4 +32,4 @@ regex = "1.5"
 bcrypt = "0.15.0"
 
 [build]
-incrememtal = true
+incremental = true

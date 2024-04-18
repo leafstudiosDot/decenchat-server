@@ -10,7 +10,8 @@ services:
     ports:
       - "7810:7810"
     volumes:
-      - ./assets:/app/assets
+      - ./assets:/usr/src/decensha/assets
+      - ./target:/usr/src/decensha/target
     links:
       - postgres
   decensha-admin:

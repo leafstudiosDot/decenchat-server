@@ -12,8 +12,12 @@ This repository includes deployment configurations for Docker and docker-compose
 - Rust (+1.69)
 - nginx
 
-## Setup Server (Docker)
-1. Run in `./runsh/docker-compose.sh` to initialize for Docker
+## Setup Server (Docker Image)
+1. Build Docker Image - `docker build -t decensha . `
+2. Add an Assets Volume - `docker run -v $(pwd)/assets:/usr/src/decensha/assets decensha`
+
+## Setup Server (Docker Compose)
+1. Run `docker-compose up -d` to initialize for Docker
 
 ## Build
 1. `cargo build` or `cargo run`

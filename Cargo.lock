@@ -872,8 +872,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2e66c9d817f1720209181c316d28635c050fa304f9c79e47a520882661b7308"
 
 [[package]]
-name = "decensha-server"
-version = "0.0.0"
+name = "decensha"
+version = "0.0.1"
 dependencies = [
  "actix-cors",
  "actix-files",

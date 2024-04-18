@@ -1,12 +1,17 @@
 FROM rust:latest as builder
 
 WORKDIR /usr/src/decensha
-COPY . .
+
+COPY Cargo.toml Cargo.lock ./
+RUN mkdir src && echo "fn main() {}" > src/main.rs && cargo build --release
+
+RUN rm -rf src
+COPY src ./src
 RUN cargo build --release
 
 FROM debian:bookworm
+
 ENV DEBIAN_FRONTEND=noninteractive
-COPY --from=builder /usr/src/decensha/target/release/decensha /usr/local/bin/decensha
 RUN apt-get update && \
     apt-get install -y \
     build-essential \
@@ -15,7 +20,14 @@ RUN apt-get update && \
     libpq-dev \
     pkg-config \
     openssl \
-    libssl-dev
+    libssl-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+WORKDIR /usr/src/decensha
+COPY --from=builder /usr/src/decensha .
 
 EXPOSE 7810
-CMD ["decensha"]
+CMD ["cargo", "run", "--release"]
