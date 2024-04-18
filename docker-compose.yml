@@ -10,12 +10,27 @@ services:
     ports:
       - "7810:7810"
     volumes:
-      - ./:/app
+      - ./assets:/usr/src/decensha/assets
+      - ./src:/usr/src/decensha/src
+      - ./.env.local:/usr/src/decensha/.env.local
     links:
       - postgres
-    command: bash -c "cargo run"
+  decensha-admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    volumes:
+      - ./admin:/adminpanel/:rw
+    ports:
+      - "7811:7811"
+    image: decensha-admin:local
+    links:
+      - decensha-server
+    command: >
+      bash -c "yarn install --production=false &&
+      yarn run dev"
   postgres:
-    restart: always
+    restart: unless-stopped
     image: postgres:latest
     container_name: postgres
     volumes:
@@ -37,6 +52,8 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
       PGADMIN_DEFAULT_PASSWORD: password
+    depends_on:
+      - decensha-server
   minio:
     command: server /data --console-address ":9001"
     environment:

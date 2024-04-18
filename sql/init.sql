@@ -1,3 +1,40 @@
+CREATE SCHEMA admin
+    AUTHORIZATION pg_database_owner;
+
+CREATE TABLE admin.accounts
+(
+    id bigserial NOT NULL,
+    name text NOT NULL,
+    password text NOT NULL,
+    permissions text[],
+    status text,
+    firstloggedin boolean,
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE IF EXISTS admin.accounts
+    OWNER to admin;
+
+INSERT INTO admin.accounts (name, password, permissions, status, firstloggedin) VALUES ('Administrator', '$2y$10$XBs4NN00pxd5e01Nb01Qk.xTJQM1N0Epk4dWA/EWv7XP9Oe8e.uX6', '{"ADMINISTRATOR"}', 'master', false);
+                                                                                        -- admin
+
+CREATE TABLE admin.sessions
+(
+    token text NOT NULL,
+    userid bigint NOT NULL,
+    PRIMARY KEY (token),
+    CONSTRAINT userid_accounts FOREIGN KEY (userid)
+        REFERENCES admin.accounts (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        NOT VALID
+);
+
+ALTER TABLE IF EXISTS admin.sessions
+    OWNER to admin;
+
+
+
 CREATE SCHEMA IF NOT EXISTS public
     AUTHORIZATION pg_database_owner;
 
@@ -55,6 +92,7 @@ CREATE TABLE IF NOT EXISTS public.channels
     name text COLLATE pg_catalog."default" NOT NULL,
     sortindex integer NOT NULL,
     voice boolean,
+    specificpermissions json[],
     CONSTRAINT channels_pkey PRIMARY KEY (id)
 )
 
@@ -83,6 +121,8 @@ CREATE TABLE IF NOT EXISTS public.messages
     author bigserial NOT NULL,
     date timestamp with time zone NOT NULL,
     channel bigserial NOT NULL,
+    replyto bigint,
+    spoiler boolean;
     CONSTRAINT messages_pkey PRIMARY KEY (id),
     CONSTRAINT members_id FOREIGN KEY (author)
         REFERENCES public.members (id) MATCH SIMPLE

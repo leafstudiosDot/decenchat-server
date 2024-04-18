@@ -21,6 +21,11 @@
                 "method": "oauth2",
                 "clientid": "",
                 "secret": ""
+            },
+            "statolumn": {
+                "method": "oauth2",
+                "clientid": "",
+                "secret": ""
             }
         }
     ]

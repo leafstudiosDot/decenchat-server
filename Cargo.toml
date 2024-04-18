@@ -1,6 +1,6 @@
 [package]
-name = "decensha-server"
-version = "0.0.0"
+name = "decensha"
+version = "0.0.1"
 edition = "2021"
 authors = ["leafstudiosDot"]
 description = "Decentralized Chatroom Server"
@@ -30,3 +30,6 @@ x509-parser = "0.15.0"
 openssl = "0.10.55"
 regex = "1.5"
 bcrypt = "0.15.0"
+
+[build]
+incremental = true

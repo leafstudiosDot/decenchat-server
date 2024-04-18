@@ -12,6 +12,7 @@ use x509_parser::x509::X509Version;
 use x509_parser::pem::pem_to_der;
 use x509_parser::parse_x509_der;
 
+mod admin;
 mod members;
 mod server;
 
@@ -113,6 +114,9 @@ async fn run_server() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             .wrap(Cors::default().allow_any_origin().send_wildcard().allow_any_method().allow_any_header())
             .service(index)
+            .service(web::scope("/admin")
+                .service(admin::index_admin)
+            )
             .service(web::scope("/members")
                 .service(members::server_join)
                 .service(members::server_left)

@@ -1,0 +1,21 @@
+{
+  "name": "Decensha on GitHub Codespaces",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/rust:1": {},
+    "ghcr.io/devcontainers/features/sshd:1": {}
+  },
+  "forwardPorts": [7810],
+  "portsAttributes": {
+    "7810": {
+      "label": "server",
+      "onAutoForward": "notify"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": ["EditorConfig.EditorConfig", "webben.browserslist"]
+    }
+  }
+}

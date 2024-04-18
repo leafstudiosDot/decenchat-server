@@ -12,15 +12,20 @@ This repository includes deployment configurations for Docker and docker-compose
 - Rust (+1.69)
 - nginx
 
-## Setup Server (Docker)
-1. Run in `./runsh/docker-compose.sh` to initialize for Docker
+## Setup Server (Docker Image)
+1. Build Docker Image - `docker build -t decensha .`
+2. Run Docker Image as a Container - `docker run -v $(pwd)/assets:/usr/src/decensha/assets -v $(pwd)/.env.local:/usr/src/decensha/.env.local decensha`
+    - Run Docker Image as a Container for server contributors - `docker run -v $(pwd)/assets:/usr/src/decensha/assets -v $(pwd)/.env.local:/usr/src/decensha/.env.local -v $(pwd)/src:/usr/src/decensha/src decensha`
+
+## Setup Server (Docker Compose)
+1. Run `docker-compose up -d` to initialize for Docker
 
 ## Build
 1. `cargo build` or `cargo run`
 2. `cargo build --release` for Production
 
 ## License
-© 2023 leafstudiosDot and other contributors for this project.
+© 2023-2024 leafstudiosDot and other contributors for this project.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
