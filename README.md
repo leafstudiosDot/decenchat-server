@@ -3,13 +3,14 @@
 </div>
 <br />
 
-# The Decentralised Chatroom
+# The Self-hosted Chatroom
 Decensha is an open source chatroom server. This repository is a server for Decensha Client, it is provided for community hosts that are running a Decensha server.
 ## Prerequisites
-This repository includes deployment configurations for Docker and docker-compose. It is recommended to use Docker while running Decensha server.
-### Requirements (Non-Docker) ‼️NOT RECOMMENDED WITHOUT DOCKER‼️
-- PostgreSQL (+15.3)
-- Rust (+1.69)
+This repository includes deployment configurations for Docker and docker-compose.
+### Requirements (Non-Docker)
+- PostgreSQL (+16.2)
+- Rust (+1.77)
+- Redis (+7.x)
 - nginx
 
 ## Setup Server (Docker Image)

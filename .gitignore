@@ -9,3 +9,4 @@ pgadmin_data
 minio
 assets/details.json
 assets/certs/*
+redis_data
